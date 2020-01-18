@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import axios from 'axios';
 import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 
 export default class CreateActivity extends Component {
@@ -22,10 +24,15 @@ export default class CreateActivity extends Component {
   }
 
   componentDidMount() {
-    this.setState({
-      users: ["test user"],
-      username: "test user"
-    });
+    axios.get('http://localhost:5000/users/')
+    .then(response=>{
+        if(response.data.length>0){
+            this.setState({
+                users:response.data.map(user=>user.username),
+                username: response.data[0].username
+            })
+        }
+    })
   }
 
   onChangeUsername(e) {
@@ -61,9 +68,13 @@ export default class CreateActivity extends Component {
       price: this.state.price,
       date: this.state.date
     };
+
     console.log(activity);
 
-    window.location = "/";
+    axios.post('http://localhost:5000/activities/add', activity)
+            .then(res => console.log(res.data));
+    
+    //window.location = "/";
   }
 
   render() {
@@ -95,17 +106,17 @@ export default class CreateActivity extends Component {
               type="text"
               required
               className="form-control"
-              value={this.state.description}
-              onChange={this.onChangeDescription}
+              value={this.state.desc}
+              onChange={this.onChangeDesc}
             />
           </div>
           <div className="form-group">
-            <label>Duration (in minutes): </label>
+            <label>Price: </label>
             <input
               type="text"
               className="form-control"
-              value={this.state.duration}
-              onChange={this.onChangeDuration}
+              value={this.state.price}
+              onChange={this.onChangePrice}
             />
           </div>
           <div className="form-group">
