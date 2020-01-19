@@ -10,11 +10,7 @@ const Activity = props => (
         <td>{props.activity.price}</td>
         <td>{props.activity.date.substring(0,10)}</td>
         <td>
-<<<<<<< HEAD
             <Link to={"/edit/"+props.activity._id}>edit</Link> | <a href='#' onClick={()=>{props.deleteActivity(props.activity._id) }}>delete</a>
-=======
-            <Link to={"/edit/"+props.activity._id}>edit</Link>| <a href='#' onClick={()=>{props.deleteActivity(props.activity._id) }}>delete</a>
->>>>>>> 9cdc1b565ee3eeee69a06f5119952681c406d854
         </td>
 
     </tr>
