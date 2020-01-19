@@ -5,12 +5,12 @@ import axios from 'axios';
 
 const Activity = props => (
     <tr>
-        <td>{props.activity.username}</td>
+        <td className="text-capitalize">{props.activity.username}</td>
         <td>{props.activity.desc}</td>
-        <td>{props.activity.price}</td>
-        <td>{props.activity.date.substring(0,10)}</td>
+        <td className="price">{props.activity.price}₺</td>
+        <td>{props.activity.date.substring(0, 10)}</td>
         <td>
-            <Link to={"/edit/"+props.activity._id}>edit</Link> | <a href='#' onClick={()=>{props.deleteActivity(props.activity._id) }}>delete</a>
+            <Link to={"/edit/" + props.activity._id}>🖋️</Link> | <a href='#' onClick={() => { props.deleteActivity(props.activity._id) }}>🗑️</a>
         </td>
 
     </tr>
@@ -26,6 +26,16 @@ export default class ActivityList extends Component {
         this.state = { activities: [] };
     }
 
+    totalPrice() {
+        const priceArray = document.body.querySelectorAll(".price");
+        var sum = 0;
+        for (var i = 0; i < priceArray.length; i++) {
+            sum += parseInt(priceArray[i].innerText);
+            console.log(sum);
+        };
+       
+        return sum;
+    }
 
     componentDidMount() {
         axios.get('http://localhost:5000/activities')
@@ -54,15 +64,13 @@ export default class ActivityList extends Component {
 
     render() {
         return (
-
             <div>
-
-                <h3>Previous Payments</h3>
-                <table className="table">
+                <h3 className="text-center">Previous Payments</h3>
+                <table className="table table-hover table-dark">
                     <thead className="thead-light">
                         <tr>
                             <th>Username</th>
-                            <th>Desc</th>
+                            <th>Description</th>
                             <th>Price</th>
                             <th>Date</th>
                             <th>Actions</th>
@@ -71,6 +79,7 @@ export default class ActivityList extends Component {
                     <tbody>
                         {this.activityList()}
                     </tbody>
+                    <tr>Total = {this.totalPrice()}</tr>
                 </table>
             </div>
 

@@ -8,7 +8,6 @@ import EditActivity from "./components/edit-activity.component";
 import CreateActivitiy from "./components/create-activity.component";
 import CreateUser from "./components/create-user.component";
 
-import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
